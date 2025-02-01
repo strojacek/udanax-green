@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright 1999 by Ka-Ping Yee.  All rights reserved.
 # This file is part of the Udanax Green distribution.
@@ -28,7 +28,8 @@
 # prior written authorization from Udanax.com.
 
 import sys, os, string, x88, tktrans, time
-from Tkinter import *
+from tkinter import Tk, mainloop, Frame, BOTH, LEFT, Button, TOP, RIGHT, Canvas, DISABLED, Scrollbar, WORD, Menu, \
+    IntVar, StringVar, Menubutton, Label, Entry, Text, X, NORMAL, Y, SUNKEN, FLAT, RAISED, Toplevel, TclError
 
 REVISION = "$Revision: 2.3"
 VERSION = x88.Address(string.split(REVISION)[1])
@@ -89,10 +90,10 @@ class XuText(Text):
             if len(other) > 2:
                 other = self.docid.localize(other)
             if other[0] != 1:
-                raise ValueError, "%s is not in text region" % other
+                raise ValueError("%s is not in text region" % other)
             return other[1] - 1
         else:
-            raise TypeError, "%s is not an index, position, or address" % other
+            raise TypeError("%s is not an index, position, or address" % other)
 
     def index(self, other):
         if type(other) is type(""):
@@ -111,7 +112,7 @@ class XuText(Text):
 
     def indices(self, vspan):
         if not x88.istype(x88.Span, vspan):
-            raise TypeError, "%s is not a span" % vspan
+            raise TypeError("%s is not a span" % vspan)
         return self.index(vspan.start), self.index(vspan.end())
 
     def vspan(self, start, end):
@@ -144,7 +145,7 @@ class XuText(Text):
 
     def selind(self):
         range = self.tag_ranges("sel")
-        if not range: raise ValueError, "no text is selected"
+        if not range: raise ValueError("no text is selected")
         return range
 
     def selvspan(self):
@@ -734,7 +735,7 @@ class Browser(Notifier, Frame):
                                 x88.SpecSet(x88.JUMP_TYPE))
                     #print "opened the file \"%s\"." % os.path.join(dirpath,file)
                 except IOError:
-                     print "Could not open the file \"%s\"." % os.path.join(dirpath,file)
+                     print("Could not open the file \"%s\"." % os.path.join(dirpath,file))
                  
     def cb_importdocument(self):
         """Read a file or the output of a command, and either insert it
@@ -1413,24 +1414,24 @@ class TwoBrowserWindow(BrowserWindow):
         BrowserWindow.eh_destroy(self, event)
 
 if __name__ == "__main__":
-    print "Pyxi (Python Udanax Interface) v" + str(VERSION)
-    print "Copyright 1999 by Ka-Ping Yee.  All rights reserved."
-    print "This program and the Udanax Green hypertext server are part of the"
-    print "Udanax project.  Please see http://www.udanax.com/ for details."
-    print
+    print("Pyxi (Python Udanax Interface) v" + str(VERSION))
+    print("Copyright 1999 by Ka-Ping Yee.  All rights reserved.")
+    print("This program and the Udanax Green hypertext server are part of the")
+    print("Udanax project.  Please see http://www.udanax.com/ for details.")
+    print()
 
     dir = os.getcwd()
     if not os.path.isdir("be"):
-        print "There is no directory named \"be\" in which to run the Udanax"
-        print "server.  Please create it, and also create the file (or link)"
-        print "be/backend (the back-end executable)."
+        print("There is no directory named \"be\" in which to run the Udanax")
+        print("server.  Please create it, and also create the file (or link)")
+        print("be/backend (the back-end executable).")
         sys.exit(1)
     if not os.path.isfile("be/backend"):
-        print "There is no file at be/backend.  Please put a copy or a link"
-        print "to the server executable there."
+        print("There is no file at be/backend.  Please put a copy or a link")
+        print("to the server executable there.")
         sys.exit(1)
     if not os.path.exists("be/enf.enf"):
-        print "No enfilade file at be/enf.enf; copying in the default."
+        print("No enfilade file at be/enf.enf; copying in the default.")
         os.system("cp -f ../enfs/sample.enf be/enf.enf")
         
     os.chdir("be")
